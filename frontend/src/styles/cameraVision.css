@@ -1,0 +1,492 @@
+/**
+ * cameraVision.css
+ * Futuristic robotic HUD styling for Desk Buddy's camera vision & gesture detection.
+ * Consistent with cyan (#8AD6E2), deep blue (#323AA5), and dark charcoal theme.
+ */
+
+.desk-camera-hud-wrapper {
+  position: fixed;
+  top: 76px;
+  right: 18px;
+  z-index: 85;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 600px) {
+  .desk-camera-hud-wrapper {
+    top: 68px;
+    right: 12px;
+  }
+}
+
+.desk-camera-hud-wrapper.is-minimized {
+  top: 72px;
+  right: 18px;
+}
+
+/* Card Container */
+.desk-camera-hud-card {
+  width: clamp(210px, 24vw, 290px);
+  background: rgba(11, 13, 18, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(138, 214, 226, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.75),
+              0 0 18px rgba(138, 214, 226, 0.2);
+  overflow: hidden;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desk-camera-hud-wrapper.is-minimized .desk-camera-hud-card {
+  width: auto;
+  border-radius: 9999px;
+  padding: 2px 6px;
+}
+
+/* Header */
+.desk-camera-hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(18, 24, 38, 0.65);
+  border-bottom: 1px solid rgba(138, 214, 226, 0.2);
+}
+
+.desk-camera-hud-wrapper.is-minimized .desk-camera-hud-header {
+  padding: 4px 10px;
+  background: transparent;
+  border-bottom: none;
+  gap: 12px;
+}
+
+.desk-camera-hud-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.desk-camera-hud-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-eye-cyan);
+  box-shadow: 0 0 8px var(--color-eye-cyan);
+  animation: pulse-hud-dot 1.8s ease-in-out infinite;
+}
+
+.desk-camera-hud-indicator.is-detecting {
+  background: #38BDF8;
+  box-shadow: 0 0 14px #38BDF8;
+  animation: pulse-hud-detect 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-hud-dot {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes pulse-hud-detect {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.4); filter: brightness(1.6); }
+}
+
+.desk-camera-hud-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #E2E8F0;
+  text-transform: uppercase;
+}
+
+.desk-camera-hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.desk-camera-test-wave-btn {
+  background: rgba(138, 214, 226, 0.16);
+  border: 1px solid var(--color-eye-cyan);
+  color: #FFFFFF;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.desk-camera-test-wave-btn:hover {
+  background: rgba(138, 214, 226, 0.32);
+  box-shadow: 0 0 10px rgba(138, 214, 226, 0.4);
+}
+
+.desk-camera-hud-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94A3B8;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.desk-camera-hud-action-btn:hover {
+  background: rgba(138, 214, 226, 0.2);
+  color: var(--color-eye-cyan);
+  border-color: var(--color-eye-cyan);
+}
+
+.desk-camera-hud-action-btn.is-close:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #F87171;
+  border-color: #EF4444;
+}
+
+/* Viewport Frame */
+.desk-camera-viewport-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000000;
+  overflow: hidden;
+}
+
+.desk-camera-video-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Mirror camera feed naturally */
+  filter: contrast(1.08) brightness(0.95);
+}
+
+.desk-camera-hidden-canvas {
+  display: none;
+}
+
+/* Scanline Overlay */
+.desk-camera-scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 24, 38, 0) 50%,
+    rgba(0, 0, 0, 0.35) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* Futuristic Tech Reticle Brackets */
+.desk-hud-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--color-eye-cyan);
+  border-style: solid;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.desk-hud-bracket.top-left {
+  top: 8px;
+  left: 8px;
+  border-width: 2px 0 0 2px;
+}
+.desk-hud-bracket.top-right {
+  top: 8px;
+  right: 8px;
+  border-width: 2px 2px 0 0;
+}
+.desk-hud-bracket.bottom-left {
+  bottom: 8px;
+  left: 8px;
+  border-width: 0 0 2px 2px;
+}
+.desk-hud-bracket.bottom-right {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Center Crosshair */
+.desk-hud-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.desk-hud-crosshair-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-eye-cyan);
+  box-shadow: 0 0 6px var(--color-eye-cyan);
+}
+
+/* Hand Position Tracking Reticle */
+.desk-hud-hand-tracker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 5;
+  transition: left 0.08s ease-out;
+}
+
+.desk-hud-tracker-line {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(138, 214, 226, 0.4) 30%,
+    var(--color-eye-cyan) 50%,
+    rgba(138, 214, 226, 0.4) 70%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px var(--color-eye-cyan);
+}
+
+.desk-hud-tracker-pill {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+  filter: drop-shadow(0 0 6px var(--color-eye-cyan));
+  animation: pulse-tracker-hand 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-tracker-hand {
+  0% { transform: translate(-50%, -50%) scale(0.9); }
+  100% { transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Detected Flash Banner */
+.desk-hud-detected-banner {
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14, 22, 36, 0.96);
+  border: 1.5px solid var(--color-eye-cyan);
+  box-shadow: 0 0 20px rgba(138, 214, 226, 0.65);
+  border-radius: 20px;
+  padding: 5px 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.desk-hud-detected-text {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #FFFFFF;
+  text-shadow: 0 0 8px var(--color-eye-cyan);
+}
+
+/* Status Overlay Bars at Viewport Bottom */
+.desk-hud-status-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.desk-hud-wave-segments {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.desk-hud-wave-label,
+.desk-hud-meter-label {
+  font-size: 0.62rem;
+  color: #94A3B8;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.desk-hud-segments-track {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.desk-hud-segments-track .segment {
+  width: 9px;
+  height: 6px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.15s ease;
+}
+
+.desk-hud-segments-track .segment.is-active {
+  background: var(--color-eye-cyan);
+  box-shadow: 0 0 8px var(--color-eye-cyan);
+}
+
+.desk-hud-motion-meter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.desk-hud-meter-bar {
+  width: 44px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.desk-hud-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #323AA5, var(--color-eye-cyan));
+  border-radius: 3px;
+  transition: width 0.08s ease;
+}
+
+/* Footer Instructions */
+.desk-camera-hud-footer {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(14, 18, 24, 0.9);
+}
+
+.desk-hud-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #CBD5E1;
+  line-height: 1.3;
+}
+
+.desk-hud-hint-icon {
+  font-size: 0.85rem;
+}
+
+.desk-hud-footer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.desk-hud-mic-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(138, 214, 226, 0.3);
+  color: #CBD5E1;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.desk-hud-mic-toggle.is-enabled {
+  background: rgba(52, 211, 153, 0.15);
+  border-color: #34D399;
+  color: #34D399;
+}
+
+.desk-hud-mic-toggle.is-disabled {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #F87171;
+}
+
+.desk-hud-voice-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: var(--color-eye-cyan);
+  font-weight: 600;
+}
+
+.desk-voice-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #34D399;
+  box-shadow: 0 0 6px #34D399;
+  animation: pulse-voice-dot 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-voice-dot {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Camera Error State */
+.desk-camera-error-container {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.desk-camera-error-icon {
+  font-size: 1.8rem;
+}
+
+.desk-camera-error-text {
+  font-size: 0.75rem;
+  color: #F87171;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.desk-camera-retry-btn {
+  margin-top: 4px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0B0D12;
+  background: var(--color-eye-cyan);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.desk-camera-retry-btn:hover {
+  background: #A5E4EE;
+  box-shadow: 0 0 12px rgba(138, 214, 226, 0.5);
+}

@@ -1,0 +1,242 @@
+/**
+ * Work Mode Styling
+ * Minimalist glowing laptop centered directly between both eyes,
+ * dual varied-typing robotic hands, and status badge.
+ */
+
+/* Outer Centering Wrapper: Guaranteed 100% dead center between both eyes */
+.desk-work-mode-wrapper {
+  position: absolute;
+  top: calc(50% + var(--eye-size) * 0.05);
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 55;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .desk-work-mode-wrapper {
+    top: calc(50% + var(--eye-size) * 0.02);
+  }
+}
+
+/* Inner Container: Centered automatically by flexbox wrapper */
+.desk-work-mode-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  transform-origin: center top;
+}
+
+/* Status Badge: "Working..." sits in the gap between eyes */
+.desk-work-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 18, 24, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-eye-cyan);
+  border-radius: 9999px;
+  padding: 4px 12px;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6),
+              0 0 12px rgba(138, 214, 226, 0.25);
+}
+
+.desk-work-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-eye-cyan);
+  box-shadow: 0 0 8px var(--color-eye-cyan);
+  animation: pulse-work-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-work-dot {
+  0%, 100% { transform: scale(0.85); opacity: 0.6; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+
+.desk-work-status-text {
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.desk-work-mode-hint {
+  color: #64748B;
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color 0.15s ease;
+}
+
+.desk-work-mode-hint:hover {
+  color: var(--color-eye-cyan);
+}
+
+/* Ambient Upward Light Glow from Laptop Screen onto Buddy's Eyes */
+.desk-laptop-screen-ambient-glow {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(130px, 32vw, 220px);
+  height: 70px;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(138, 214, 226, 0.3) 0%,
+    rgba(50, 58, 165, 0.15) 50%,
+    transparent 80%
+  );
+  filter: blur(16px);
+  pointer-events: none;
+  animation: screen-ambient-pulse 3s ease-in-out infinite;
+}
+
+@keyframes screen-ambient-pulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* Laptop & Dual Hands Rig */
+.desk-laptop-rig {
+  position: relative;
+  width: clamp(170px, 44vw, 290px);
+  height: clamp(105px, 28vw, 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .desk-laptop-rig {
+    width: clamp(150px, 32vw, 210px);
+    height: clamp(95px, 20vw, 135px);
+  }
+}
+
+.desk-laptop-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+}
+
+/* Glowing Screen Animations */
+.desk-laptop-screen-active-glow {
+  animation: screen-subtle-glow 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes screen-subtle-glow {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(138, 214, 226, 0.4)); }
+}
+
+/* Code Stream Lines */
+.code-line-pulse-1 {
+  animation: code-pulse 1.8s ease-in-out infinite alternate;
+}
+.code-line-pulse-2 {
+  animation: code-pulse 2.2s ease-in-out infinite alternate 0.4s;
+}
+.code-line-pulse-3 {
+  animation: code-pulse 1.5s ease-in-out infinite alternate 0.8s;
+}
+
+@keyframes code-pulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.code-progress-bar {
+  animation: progress-slide 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes progress-slide {
+  0% { transform: translateX(0); opacity: 0.6; }
+  50% { transform: translateX(60px); opacity: 1; }
+  100% { transform: translateX(110px); opacity: 0; }
+}
+
+/* --- TWO ROBOTIC HANDS TYPING OVER KEYBOARD --- */
+.desk-typing-hand-wrapper {
+  position: absolute;
+  bottom: 6%;
+  width: clamp(36px, 9vw, 58px);
+  height: clamp(42px, 10vw, 66px);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.desk-typing-hand-wrapper.hand-left {
+  left: 20%;
+  animation: wrist-sway-left 3.2s ease-in-out infinite;
+}
+
+.desk-typing-hand-wrapper.hand-right {
+  right: 20%;
+  animation: wrist-sway-right 2.8s ease-in-out infinite;
+}
+
+@keyframes wrist-sway-left {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(3px, -2px) rotate(2deg); }
+}
+
+@keyframes wrist-sway-right {
+  0%, 100% { transform: translate(0, 0) rotate(2deg); }
+  50% { transform: translate(-3px, -2px) rotate(-2deg); }
+}
+
+/* Varied, Natural Typing Movements for Individual Fingers */
+.type-finger {
+  transform-origin: 50% 100%;
+}
+
+/* Left Hand Fingers */
+.finger-l-index {
+  animation: tap-finger 0.26s ease-in-out infinite alternate;
+}
+.finger-l-mid {
+  animation: tap-finger 0.38s ease-in-out infinite alternate 0.10s;
+}
+.finger-l-pinky {
+  animation: tap-finger 0.52s ease-in-out infinite alternate 0.04s;
+}
+.finger-l-thumb {
+  animation: tap-finger 0.64s ease-in-out infinite alternate 0.22s;
+}
+
+/* Right Hand Fingers */
+.finger-r-index {
+  animation: tap-finger 0.32s ease-in-out infinite alternate 0.08s;
+}
+.finger-r-mid {
+  animation: tap-finger 0.44s ease-in-out infinite alternate 0.16s;
+}
+.finger-r-pinky {
+  animation: tap-finger 0.56s ease-in-out infinite alternate 0.12s;
+}
+.finger-r-thumb {
+  animation: tap-finger 0.70s ease-in-out infinite alternate 0.26s;
+}
+
+@keyframes tap-finger {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+  100% {
+    transform: translateY(3.5px) scaleY(0.88);
+  }
+}

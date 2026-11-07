@@ -1,0 +1,415 @@
+/**
+ * Finger-Gun Mode & Sci-Fi Energy Weapon Styling
+ * Revised: Cinematic Slow-Motion Bullet Dodge & Viewer-Directed Energy Beam
+ */
+
+/* Fullscreen overlay layer for Finger Gun visual effects */
+.desk-finger-gun-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 60;
+  overflow: hidden;
+}
+
+/* 1. Cinematic Fullscreen Muzzle Flash (Fires towards viewer) */
+.desk-cinematic-screen-flash {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 85;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(138, 214, 226, 0.85) 28%,
+    rgba(50, 58, 165, 0.5) 60%,
+    transparent 85%
+  );
+  backdrop-filter: brightness(1.5);
+  -webkit-backdrop-filter: brightness(1.5);
+}
+
+/* 2. Slow-Motion Glowing Cyan Bullet with Particle Motion Trail */
+.desk-slowmo-projectile-track {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 48px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 65;
+  transform-origin: center center;
+}
+
+.desk-slowmo-bullet-core {
+  position: relative;
+  width: 32px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  box-shadow: 0 0 16px #8AD6E2,
+              0 0 32px #75D6E8,
+              0 0 48px #323AA5;
+  z-index: 4;
+}
+
+.desk-bullet-glow-aura {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(138, 214, 226, 0.8) 0%, transparent 70%);
+  filter: blur(4px);
+}
+
+/* Trailing Ghost Afterimages (Slow-Motion Matrix Effect) */
+.desk-slowmo-ghost {
+  position: absolute;
+  top: 0;
+  width: 28px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #8AD6E2;
+}
+
+.desk-slowmo-ghost.ghost-1 {
+  right: -30px;
+  opacity: 0.65;
+  filter: blur(1.5px);
+  transform: scale(0.9);
+}
+
+.desk-slowmo-ghost.ghost-2 {
+  right: -58px;
+  opacity: 0.40;
+  filter: blur(2.5px);
+  transform: scale(0.8);
+}
+
+.desk-slowmo-ghost.ghost-3 {
+  right: -86px;
+  opacity: 0.20;
+  filter: blur(4px);
+  transform: scale(0.7);
+}
+
+/* Floating Particle Sparks */
+.desk-spark-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 8px #8AD6E2;
+}
+
+.desk-spark-particle.spark-1 {
+  right: -24px;
+  top: -8px;
+  animation: float-spark-1 1.2s ease-out infinite;
+}
+
+.desk-spark-particle.spark-2 {
+  right: -50px;
+  bottom: -6px;
+  animation: float-spark-2 1.4s ease-out infinite;
+}
+
+.desk-spark-particle.spark-3 {
+  right: -75px;
+  top: -4px;
+  animation: float-spark-1 1.6s ease-out infinite 0.2s;
+}
+
+@keyframes float-spark-1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-14px, -18px) scale(0.3); opacity: 0; }
+}
+
+@keyframes float-spark-2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-18px, 16px) scale(0.3); opacity: 0; }
+}
+
+/* 3. Futuristic Energy Gun (Turned directly towards the camera/viewer) */
+.desk-viewer-gun-rig {
+  position: absolute;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 28vw, 175px);
+  height: clamp(120px, 28vw, 175px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 75;
+  perspective: 800px;
+  pointer-events: none;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .desk-viewer-gun-rig {
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    width: clamp(100px, 22vw, 140px);
+    height: clamp(100px, 22vw, 140px);
+  }
+}
+
+.desk-barrel-perspective-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: rotateX(8deg); /* 3D foreshortening looking down barrel */
+}
+
+/* Rotating Emitter Petals */
+.desk-emitter-ring-spin {
+  animation: spin-emitter 0.6s linear infinite;
+}
+
+@keyframes spin-emitter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.desk-muzzle-plasma-core {
+  transition: all 0.25s ease;
+  filter: drop-shadow(0 0 10px #8AD6E2);
+}
+
+.desk-viewer-gun-rig.is-charging .desk-muzzle-plasma-core {
+  filter: drop-shadow(0 0 24px #E0F7FA) drop-shadow(0 0 48px #8AD6E2);
+}
+
+/* Energy Converging Rings (Charging Animation) */
+.desk-charging-energy-converge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.desk-converge-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed #8AD6E2;
+  box-shadow: 0 0 12px rgba(138, 214, 226, 0.6);
+  animation: converge-inward 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.desk-converge-ring.ring-c2 {
+  animation-delay: 0.18s;
+}
+
+.desk-converge-ring.ring-c3 {
+  animation-delay: 0.36s;
+}
+
+@keyframes converge-inward {
+  0% {
+    transform: scale(1.6) rotate(0deg);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.3) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* 4. Energy Beam Fired Directly Towards the Camera/Viewer */
+.desk-viewer-energy-blast-system {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 80;
+}
+
+/* Expanding Shockwave Rings Heading Toward Viewer */
+.desk-blast-shockwave {
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 0 24px #8AD6E2,
+              0 0 48px #323AA5,
+              inset 0 0 20px #8AD6E2;
+}
+
+.desk-blast-shockwave.ring-1 {
+  width: 100%;
+  height: 100%;
+  animation: expand-shockwave-1 0.5s ease-out forwards;
+}
+
+.desk-blast-shockwave.ring-2 {
+  width: 75%;
+  height: 75%;
+  animation: expand-shockwave-1 0.5s ease-out 0.08s forwards;
+}
+
+@keyframes expand-shockwave-1 {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4.8);
+    opacity: 0;
+  }
+}
+
+/* Central Plasma Beam Core Bursting Outward */
+.desk-blast-plasma-core {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFFFF 0%, #8AD6E2 50%, #323AA5 85%);
+  box-shadow: 0 0 36px #FFFFFF,
+              0 0 80px #8AD6E2,
+              0 0 120px #323AA5;
+  animation: blast-plasma-burst 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes blast-plasma-burst {
+  0% {
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(2.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(6.5);
+    opacity: 0;
+  }
+}
+
+/* Radial Laser Rays Spreading to Screen Edges */
+.desk-blast-laser-rays {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.9) 0deg 8deg,
+    transparent 8deg 45deg,
+    rgba(138, 214, 226, 0.8) 45deg 53deg,
+    transparent 53deg 90deg,
+    rgba(255, 255, 255, 0.9) 90deg 98deg,
+    transparent 98deg 135deg,
+    rgba(138, 214, 226, 0.8) 135deg 143deg,
+    transparent 143deg 180deg,
+    rgba(255, 255, 255, 0.9) 180deg 188deg,
+    transparent 188deg 225deg,
+    rgba(138, 214, 226, 0.8) 225deg 233deg,
+    transparent 233deg 270deg,
+    rgba(255, 255, 255, 0.9) 270deg 278deg,
+    transparent 278deg 315deg,
+    rgba(138, 214, 226, 0.8) 315deg 323deg,
+    transparent 323deg 360deg
+  );
+  filter: blur(2px);
+  animation: laser-rays-burst 0.5s ease-out forwards;
+}
+
+@keyframes laser-rays-burst {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(5.5) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* 5. Comic Action Badges */
+.desk-gun-comic-badge {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 70;
+}
+
+.desk-comic-text {
+  background: rgba(14, 18, 24, 0.94);
+  border: 1.5px solid var(--color-eye-cyan);
+  color: #FFFFFF;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 18px rgba(138, 214, 226, 0.35),
+              0 4px 16px rgba(0, 0, 0, 0.75);
+}
+
+.desk-comic-slowmo {
+  border-color: #8AD6E2;
+  color: var(--color-eye-cyan);
+  box-shadow: 0 0 24px rgba(138, 214, 226, 0.5);
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
+
+.desk-comic-charging {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  box-shadow: 0 0 28px rgba(138, 214, 226, 0.7);
+}
+
+.desk-comic-blast {
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+  box-shadow: 0 0 32px rgba(138, 214, 226, 0.85);
+  font-size: 1.15rem;
+}
+
+.desk-comic-win {
+  color: var(--color-eye-cyan);
+  border-color: var(--color-eye-cyan);
+}
+
+/* 6. Cinematic Slow-Motion Dodge on Face Stage (Synchronized with 1.75s Projectile) */
+.desk-face-stage.is-slowmo-dodging {
+  animation: buddy-slowmo-dodge 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes buddy-slowmo-dodge {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(-75px, 24px, 0) rotate(-14deg) scale(0.92);
+  }
+  75% {
+    transform: translate3d(-65px, 20px, 0) rotate(-11deg) scale(0.93);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}

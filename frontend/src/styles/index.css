@@ -1,0 +1,59 @@
+/**
+ * Global Styles & Reset - Mobile First for Desk Buddy
+ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  height: 100dvh; /* Dynamic viewport height for iOS / Android */
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0B0D12;
+  color: #F8FAFC;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* OLED Black Mode */
+body.oled-black-mode,
+.desk-app-root.oled-black-mode {
+  background-color: #000000 !important;
+}
+
+/* App Root Container */
+.desk-app-root {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--color-bg-charcoal);
+  transition: background-color 0.4s ease;
+}
+
+/* Safe area insets for notched screens (iPhone, modern Android) */
+@supports (padding: env(safe-area-inset-top)) {
+  .desk-app-root {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
